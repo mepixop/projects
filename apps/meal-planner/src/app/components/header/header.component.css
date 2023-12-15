@@ -1,0 +1,27 @@
+.header {
+  background-color: rgb(255, 201, 224);
+}
+
+.navbar-nav li {
+  margin-right: 1vw;
+  margin-left: 1vw;
+  width: 8vw;
+  border-radius: 100vw;
+  text-align: center;
+}
+
+.navbar-brand {
+  margin-right: 3vw;
+}
+
+.nav-item.active {
+  background-color: rgb(236, 162, 194);
+}
+
+.nav-item.active > a {
+  color: black;
+}
+
+.nav-link {
+  cursor: pointer;
+}
