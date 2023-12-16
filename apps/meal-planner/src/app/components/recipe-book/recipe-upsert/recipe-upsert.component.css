@@ -1,0 +1,27 @@
+.wide {
+  width: 100%;
+}
+.form-group {
+  margin-bottom: 1vh;
+}
+
+.space-below {
+  margin-bottom: 1vh;
+}
+
+.form-height {
+  height: 76vh;
+}
+
+.btns {
+  text-align: right;
+}
+
+.btns > .btn {
+  margin-left: 0.2vw;
+  margin-bottom: 0.5vw;
+}
+
+.bubblegum {
+  background-color: #fdf1f5;
+}
