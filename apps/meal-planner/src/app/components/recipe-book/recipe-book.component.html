@@ -1,16 +1,20 @@
 <div class="container-fluid">
   <div class="spacing"></div>
   <div class="row justify-content-center">
-    <div class="col-9">
-      <projects-recipe-header></projects-recipe-header>
-    </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-3">
-      <projects-recipe-list></projects-recipe-list>
-    </div>
-    <div class="col-6">
-      <router-outlet></router-outlet>
+    <div class="marshmallow col-9">
+      <div class="row">
+        <div class="col">
+          <projects-recipe-header></projects-recipe-header>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <projects-recipe-list></projects-recipe-list>
+        </div>
+        <div class="col-8">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
     </div>
   </div>
 </div>
