@@ -50,33 +50,53 @@
       <div class="row space-below">
         <div class="col">Ingredients</div>
       </div>
-      <div class="row space-below">
-        <div class="col-7">
+      <div
+        class="row space-below"
+        *ngFor="let ingredient of ingredients; let i = index"
+        formArrayName="ingredients"
+      >
+        <div class="col-7" [formGroupName]="i">
           <input
             type="text"
             class="form-control"
             placeholder="Ingredient Name"
+            formControlName="name"
           />
         </div>
-        <div class="col-2">
-          <input type="number" class="form-control" placeholder="Qty." />
+        <div class="col-2" [formGroupName]="i">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Qty."
+            formControlName="amount"
+          />
         </div>
-        <div class="col-2 text-center">
-          <select class="form-select">
-            <option *ngFor="let i of ingredientUnits" [value]="i">
-              {{ i }}
+        <div class="col-2 text-center" [formGroupName]="i">
+          <select class="form-select" formControlName="unit">
+            <option *ngFor="let x of ingredientUnits" [value]="x">
+              {{ x }}
             </option>
           </select>
         </div>
         <div class="col-1">
-          <button type="button" class="btn btn-danger wide">
+          <button
+            type="button"
+            class="btn btn-danger wide"
+            (click)="deleteIngredient(i)"
+          >
             <i class="bi bi-trash"></i>
           </button>
         </div>
       </div>
       <div class="row space-below">
         <div class="col">
-          <button type="button" class="btn btn-secondary">+</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="addNewIngredient()"
+          >
+            +
+          </button>
         </div>
       </div>
     </div>

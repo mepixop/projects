@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Recipe } from '../../../libs/models/recipe.model';
-import { UNITS, Unit } from '../../../libs/models/ingredient.model';
+import { Ingredient, UNITS, Unit } from '../../../libs/models/ingredient.model';
 
 @Component({
   selector: 'projects-recipe-upsert',
@@ -32,13 +32,31 @@ export class RecipeUpsertComponent {
     });
     for (const i of recipe.ingredients) {
       (<FormArray>form.get('ingredients')).controls.push(
-        new FormGroup({
-          name: new FormControl(i.name, [Validators.required]),
-          amount: new FormControl(i.amount, [Validators.required]),
-          unit: new FormControl(i.unit)
-        })
+        this.createIngredientGroup(i)
       )
     }
     return form;
+  }
+
+  get ingredients() {
+    return (<FormArray>this.form.get('ingredients')).controls;
+  }
+
+  deleteIngredient(index: number) {
+    (<FormArray>this.form.get('ingredients')).removeAt(index);
+  }
+
+  addNewIngredient() {
+    (<FormArray>this.form.get('ingredients')).push(
+      this.createIngredientGroup({ name: '', amount: 0, unit: 'g' })
+    )
+  }
+
+  createIngredientGroup(ingredient: Ingredient) {
+    return new FormGroup({
+      name: new FormControl(ingredient.name, [Validators.required]),
+      amount: new FormControl(ingredient.amount, [Validators.required]),
+      unit: new FormControl(ingredient.unit)
+    });
   }
 }
