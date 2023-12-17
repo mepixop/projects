@@ -1,111 +1,142 @@
 <form [formGroup]="form">
-  <div class="row form-height">
-    <div class="bubblegum col">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          formControlName="name"
-          placeholder="Name"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea
-          class="form-control"
-          formControlName="description"
-          id="description"
-          placeholder="Descripe how to make the dish.."
-        >
-        {{ form.get('description') }}
-      </textarea
-        >
-      </div>
-      <div class="row">
-        <div class="col-9">
+  <div class="row bubblegum">
+    <div class="col">
+      <div class="row form-height">
+        <div class="col">
+          <div class="space-below"></div>
           <div class="form-group">
-            <label for="mediaUrl">Media Url</label>
+            <label for="name">Name</label>
             <input
               type="text"
-              id="mediaUrl"
               class="form-control"
-              formControlName="mediaUrl"
-              placeholder="https://"
+              id="name"
+              formControlName="name"
+              placeholder="Name"
             />
           </div>
-        </div>
-        <div class="col-3">
           <div class="form-group">
-            <label for="mediaType">Media Type</label>
-            <select class="form-select" formControlName="mediaType">
-              <option value="">None</option>
-              <option value="image">Image</option>
-              <option value="youtube">YouTube Url</option>
-            </select>
+            <label for="description">Description</label>
+            <textarea
+              class="form-control"
+              formControlName="description"
+              id="description"
+              placeholder="Descripe how to make the dish.."
+            >
+        {{ form.get('description') }}
+      </textarea
+            >
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <div class="form-group">
+                <label for="mediaUrl">Media Url</label>
+                <input
+                  type="text"
+                  id="mediaUrl"
+                  class="form-control"
+                  formControlName="mediaUrl"
+                  placeholder="https://"
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="form-group">
+                <label for="mediaType">Media Type</label>
+                <select class="form-select" formControlName="mediaType">
+                  <option value="">None</option>
+                  <option value="image">Image</option>
+                  <option value="youtube">YouTube Url</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="form.get('mediaType')!.value !== ''">
+            <div class="col">
+              <div
+                class="card"
+                *ngIf="form.get('mediaType')!.value === 'image'"
+              >
+                <img [src]="getImageUrl()" />
+              </div>
+              <div
+                class="card video-container"
+                *ngIf="form.get('mediaType')!.value === 'youtube'"
+              >
+                <iframe [src]="safeYoutubeUrl"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="row space-below">
+            <div class="col">Ingredients</div>
+          </div>
+          <div
+            class="row space-below"
+            *ngFor="let ingredient of ingredients; let i = index"
+            formArrayName="ingredients"
+          >
+            <div class="col-7" [formGroupName]="i">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Ingredient Name"
+                formControlName="name"
+              />
+            </div>
+            <div class="col-2" [formGroupName]="i">
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Qty."
+                formControlName="amount"
+              />
+            </div>
+            <div class="col-2 text-center" [formGroupName]="i">
+              <select class="form-select" formControlName="unit">
+                <option *ngFor="let x of ingredientUnits" [value]="x">
+                  {{ x }}
+                </option>
+              </select>
+            </div>
+            <div class="col-1">
+              <button
+                type="button"
+                class="btn btn-danger wide"
+                (click)="deleteIngredient(i)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="row space-below">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="addNewIngredient()"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row space-below">
-        <div class="col">Ingredients</div>
-      </div>
-      <div
-        class="row space-below"
-        *ngFor="let ingredient of ingredients; let i = index"
-        formArrayName="ingredients"
-      >
-        <div class="col-7" [formGroupName]="i">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Ingredient Name"
-            formControlName="name"
-          />
-        </div>
-        <div class="col-2" [formGroupName]="i">
-          <input
-            type="number"
-            class="form-control"
-            placeholder="Qty."
-            formControlName="amount"
-          />
-        </div>
-        <div class="col-2 text-center" [formGroupName]="i">
-          <select class="form-select" formControlName="unit">
-            <option *ngFor="let x of ingredientUnits" [value]="x">
-              {{ x }}
-            </option>
-          </select>
-        </div>
-        <div class="col-1">
-          <button
-            type="button"
-            class="btn btn-danger wide"
-            (click)="deleteIngredient(i)"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-      </div>
-      <div class="row space-below">
-        <div class="col">
+      <div class="row">
+        <div class="col btns">
           <button
             type="button"
             class="btn btn-secondary"
-            (click)="addNewIngredient()"
+            routerLink="/recipe-book"
           >
-            +
+            Back
+          </button>
+          <button type="button" class="btn btn-danger" (click)="resetForm()">
+            Clear
+          </button>
+          <button type="submit" class="btn btn-success" (click)="saveRecipe()">
+            Save
           </button>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row bubblegum">
-    <div class="col btns">
-      <button type="button" class="btn btn-secondary">Back</button>
-      <button type="button" class="btn btn-danger">Clear</button>
-      <button type="submit" class="btn btn-success">Save</button>
     </div>
   </div>
 </form>

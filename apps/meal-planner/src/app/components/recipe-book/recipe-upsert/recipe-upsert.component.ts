@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Recipe } from '../../../libs/models/recipe.model';
 import { Ingredient, UNITS, Unit } from '../../../libs/models/ingredient.model';
+import { RouterModule } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'projects-recipe-upsert',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './recipe-upsert.component.html',
   styleUrl: './recipe-upsert.component.css',
 })
@@ -17,8 +19,8 @@ export class RecipeUpsertComponent {
   recipeId: number | null = null;
   ingredientUnits: Unit[] = UNITS.map(e => e);
 
-  constructor() {
-    this.recipe = new Recipe('', '', '', '', []);
+  constructor(private domSanitizer: DomSanitizer) {
+    this.recipe = new Recipe('', '', '', '', [{ name: '', amount: 0, unit: 'g' }]);
     this.form = this.initForm(this.recipe);
   }
 
@@ -38,8 +40,22 @@ export class RecipeUpsertComponent {
     return form;
   }
 
+  resetForm() {
+    this.form = this.initForm(this.recipe);
+  }
+
   get ingredients() {
     return (<FormArray>this.form.get('ingredients')).controls;
+  }
+
+  get safeYoutubeUrl() {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(
+      (this.form.get('mediaUrl')!.value as string).replace('/watch?v=', '/embed/')
+    );
+  }
+
+  getImageUrl() {
+    return this.form.get('mediaUrl')!.value
   }
 
   deleteIngredient(index: number) {
@@ -58,5 +74,21 @@ export class RecipeUpsertComponent {
       amount: new FormControl(ingredient.amount, [Validators.required]),
       unit: new FormControl(ingredient.unit)
     });
+  }
+
+  saveRecipe() {
+    const newRecipe = new Recipe(
+      this.form.get('name')!.value,
+      this.form.get('description')!.value,
+      (this.form.get('mediaUrl')!.value as string).replace('/watch?v=', '/embed/'),
+      this.form.get('mediaType')!.value,
+      []
+    );
+    for (const i of this.ingredients) {
+      newRecipe.ingredients.push(
+        new Ingredient(i.value.name, i.value.amount, i.value.unit)
+      );
+    }
+    //this.recipeService.saveRecipe(newRecipe);
   }
 }
