@@ -103,7 +103,7 @@
                 class="btn btn-danger wide"
                 (click)="deleteIngredient(i)"
               >
-                <i class="bi bi-trash"></i>
+                <i class="bi bi-heartbreak"></i>
               </button>
             </div>
           </div>
@@ -127,13 +127,13 @@
             class="btn btn-secondary"
             routerLink="/recipe-book"
           >
-            Back
+            <i class="bi bi-house-heart"></i> Back
           </button>
           <button type="button" class="btn btn-danger" (click)="resetForm()">
-            Clear
+            <i class="bi bi-heartbreak"></i> Clear
           </button>
           <button type="submit" class="btn btn-success" (click)="saveRecipe()">
-            Save
+            <i class="bi bi-arrow-through-heart"></i> Save
           </button>
         </div>
       </div>
