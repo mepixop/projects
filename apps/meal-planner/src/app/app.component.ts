@@ -7,7 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [HeaderComponent, RouterModule],
   selector: 'projects-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'meal-planner';

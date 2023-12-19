@@ -1,9 +1,4 @@
-.bubblegum {
-  background-color: #fdf1f5;
-  border-radius: 5px;
-}
-
-.list-height {
+.list-size {
   height: 80vh;
   max-height: 80vh;
   overflow-y: auto;
@@ -15,8 +10,4 @@
 
 .spacing-top {
   padding-top: 1vh;
-}
-
-.spacing-bottom {
-  padding-bottom: 1vh;
 }

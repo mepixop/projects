@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Candy Theme Colors and styles */
+.round-corners {
+  border-radius: 5px;
+}
+
+.color-bananacreme-pale {
+  background-color: rgb(255, 245, 236);
+}
+
+.color-bananacreme-base {
+  background-color: rgb(255, 235, 192);
+}
+
+.color-bananacreme-strong {
+  background-color: rgb(255, 156, 100);
+}
+
+.color-cottoncandy-pale {
+  background-color: rgb(253, 241, 245);
+}
+
+.color-cottoncandy-base {
+  background-color: rgb(255, 201, 224);
+}
+
+.color-cottoncandy-strong {
+  background-color: rgb(236, 162, 194);
+}
