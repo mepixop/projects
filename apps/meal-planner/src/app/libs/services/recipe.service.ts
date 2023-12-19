@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Recipe } from "../models/recipe.model";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RecipeService {
   recipeList: Recipe[] = []
 

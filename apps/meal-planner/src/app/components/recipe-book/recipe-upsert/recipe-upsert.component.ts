@@ -5,6 +5,7 @@ import { Recipe } from '../../../libs/models/recipe.model';
 import { Ingredient, UNITS, Unit } from '../../../libs/models/ingredient.model';
 import { RouterModule } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RecipeService } from '../../../libs/services/recipe.service';
 
 @Component({
   selector: 'projects-recipe-upsert',
@@ -19,7 +20,7 @@ export class RecipeUpsertComponent {
   recipeId: number | null = null;
   ingredientUnits: Unit[] = UNITS.map(e => e);
 
-  constructor(private domSanitizer: DomSanitizer) {
+  constructor(private domSanitizer: DomSanitizer, private recipeService: RecipeService) {
     this.recipe = new Recipe('', '', '', '', [{ name: '', amount: 0, unit: 'g' }]);
     this.form = this.initForm(this.recipe);
   }
@@ -89,6 +90,6 @@ export class RecipeUpsertComponent {
         new Ingredient(i.value.name, i.value.amount, i.value.unit)
       );
     }
-    //this.recipeService.saveRecipe(newRecipe);
+    this.recipeService.addRecipe(newRecipe)
   }
 }
