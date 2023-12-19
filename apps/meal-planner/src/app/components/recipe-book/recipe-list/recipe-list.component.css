@@ -1,0 +1,21 @@
+.bubblegum {
+  background-color: #fdf1f5;
+}
+
+.list-height {
+  height: 80vh;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.spacing-right {
+  padding-right: 1vh;
+}
+
+.spacing-top {
+  padding-top: 1vh;
+}
+
+.spacing-bottom {
+  padding-bottom: 1vh;
+}
