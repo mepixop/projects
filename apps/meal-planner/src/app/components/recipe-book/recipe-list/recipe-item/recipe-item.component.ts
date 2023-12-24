@@ -12,4 +12,17 @@ import { Recipe } from '../../../../libs/models';
 })
 export class RecipeItemComponent {
   @Input() recipe!: Recipe;
+
+  formatDescription(): string {
+    let formattedString = this.recipe.description;
+    if (formattedString.length > 30) {
+      formattedString = formattedString.substring(0, 29) + '...';
+    }
+    return formattedString;
+  }
+
+  get activeCondition(): boolean {
+    //put some logic probably based on router id or something here
+    return Math.random() > 0.5;
+  }
 }

@@ -1,8 +1,35 @@
-.marshmallow {
+.recipe-box {
+  margin-right: 0.1vw;
+  margin-left: 0.1vw;
+  margin-bottom: 0.5vw;
+  cursor: pointer;
   background-color: white;
-  border-radius: 5vh;
+  border-radius: 100vh;
 }
 
-.recipeAlign {
-  margin-left: 2vh;
+.recipe-box.active {
+  border: rgb(236, 162, 194) 2px solid;
+}
+
+.recipe-header {
+  font-size: x-large;
+  padding-top: 1vh;
+  border-bottom: 1px solid black;
+}
+
+.recipe-description {
+  font-size: large;
+  padding-bottom: 1vh;
+}
+
+.color-bananacreme-pale {
+  background-color: rgb(255, 245, 236);
+}
+
+.color-bananacreme-strong {
+  background-color: rgb(255, 156, 100);
+}
+
+.color-bananacreme-base {
+  background-color: rgb(255, 235, 192);
 }
