@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Input } from '@angular/core';
-import { Recipe } from '../../../../libs/models/recipe.model';
+import { Recipe } from '../../../../libs/models';
 
 @Component({
   selector: 'projects-recipe-item',
