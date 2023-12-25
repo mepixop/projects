@@ -15,8 +15,8 @@ export const appRoutes: Route[] = [
     children: [
       { path: '', pathMatch: 'full', component: RecipeDetailComponent },
       { path: 'add', component: RecipeUpsertComponent },
-      { path: 'edit/:id', component: RecipeUpsertComponent },
       { path: ':id', component: RecipeDetailComponent },
+      { path: ':id/edit', component: RecipeUpsertComponent },
     ],
     resolve: { r: resolveRecipes },
   },
