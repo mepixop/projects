@@ -1,1 +1,54 @@
-<p>recipe-detail works!</p>
+<div class="row color-cottoncandy-pale round-corners">
+  <div *ngIf="id" class="col">
+    <div class="row form-height">
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <h1>{{ recipe?.name }}</h1>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-8 ingredient">
+            <div class="row">
+              <div class="col-1">Qty</div>
+              <div class="col-1">Unit</div>
+              <div class="col">Name</div>
+              <div class="col-1"><i class="bi bi-postage-heart"></i></div>
+            </div>
+            <div class="row" *ngFor="let ingredient of recipe?.ingredients">
+              <div class="col-1">{{ ingredient.amount }}</div>
+              <div class="col-1">{{ ingredient.unit }}</div>
+              <div class="col">{{ ingredient.name }}</div>
+              <div class="col-1">
+                <input class="form-check-input me-1" type="checkbox" value="" />
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card" *ngIf="recipe!.mediaType === 'image'">
+              <img [src]="recipe?.mediaUrl" class="image-limit" />
+            </div>
+            <div class="card" *ngIf="recipe!.mediaType === 'youtube'">
+              <iframe [src]="recipe?.mediaUrl" class="image-limit"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">{{ recipe?.description }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col btns">
+        <button type="button" class="btn btn-secondary">edit</button>
+        <button type="button" class="btn btn-danger">
+          add to shoppinglist
+        </button>
+        <button type="button" class="btn btn-success">add to planer</button>
+      </div>
+    </div>
+  </div>
+</div>
