@@ -19,10 +19,15 @@ export class RecipeService {
     return this.recipeList;
   }
 
+  getRecipeById(id: string) {
+    return this.recipeList.find((ele) => ele.id === id);
+  }
+
   getFirebaseRecipes() {
     if (this.recipeList.length > 0) return;
     this.recipeFirebaseService.getRecipes().subscribe((data) => {
       Object.keys(data).forEach((key) => this.recipeList.push(data[key]));
+      this.recipesChanged.next(this.recipeList);
     });
   }
 }

@@ -11,14 +11,13 @@ import { RecipeItemComponent } from './recipe-item/recipe-item.component';
   styleUrl: './recipe-list.component.css',
 })
 export class RecipeListComponent implements OnInit {
-  recipeList: Recipe[] = []
-  constructor(private recipeService: RecipeService) { }
+  recipeList: Recipe[] = [];
+  constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
-    this.recipeList = this.recipeService.getRecipelist()
-    this.recipeService.recipesChanged.subscribe(recipes => {
+    this.recipeList = this.recipeService.getRecipelist();
+    this.recipeService.recipesChanged.subscribe((recipes) => {
       this.recipeList = recipes;
     });
   }
-
 }
