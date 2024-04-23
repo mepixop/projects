@@ -1,11 +1,6 @@
-.nav-height {
-  height: 6vh;
-}
-
 .navbar-nav li {
   margin-right: 1vw;
   margin-left: 1vw;
-  width: 8vw;
   border-radius: 100vw;
   text-align: center;
 }
