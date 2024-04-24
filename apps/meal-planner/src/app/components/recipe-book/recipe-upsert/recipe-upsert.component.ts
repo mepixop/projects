@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterModule, Params } from '@angular/router';
 import { Recipe } from '../../../libs/models/recipe.model';
 import { Ingredient, UNITS, Unit } from '../../../libs/models/ingredient.model';
-import { RouterModule } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RecipeService } from '../../../libs/services/recipe.service';
-
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'projects-recipe-upsert',
   standalone: true,
@@ -17,23 +17,37 @@ import { RecipeService } from '../../../libs/services/recipe.service';
 export class RecipeUpsertComponent {
   form: FormGroup;
   recipe: Recipe;
-  recipeId: number | null = null;
+  id: string |undefined;
   ingredientUnits: Unit[] = UNITS.map(e => e);
+  editMode = false
 
-  constructor(private domSanitizer: DomSanitizer, private recipeService: RecipeService) {
+  subscriptions: Subscription[] = [];
+
+  constructor(private domSanitizer: DomSanitizer, private recipeService: RecipeService, private route: ActivatedRoute,) {
     this.recipe = new Recipe('', '', '', '', [{ name: '', amount: 0, unit: 'g' }]);
-    this.form = this.initForm(this.recipe);
+    this.form = this.initForm();
   }
 
-  initForm(recipe: Recipe): FormGroup {
+  initForm(): FormGroup { 
+    this.subscriptions.push(this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.editMode = (params['id'] != null);
+      if (this.editMode){
+        this.recipe = this.recipeService.getRecipeById(this.id!)!;
+      }
+     
+    }));
+    ;
+    
+    console.log(this.recipe)
     const form = new FormGroup({
-      name: new FormControl(recipe.name, [Validators.required]),
-      description: new FormControl(recipe.description),
-      mediaUrl: new FormControl(recipe.mediaUrl),
-      mediaType: new FormControl(recipe.mediaType),
+      name: new FormControl(this.recipe.name, [Validators.required]),
+      description: new FormControl(this.recipe.description),
+      mediaUrl: new FormControl(this.recipe.mediaUrl),
+      mediaType: new FormControl(this.recipe.mediaType),
       ingredients: new FormArray([])
     });
-    for (const i of recipe.ingredients) {
+    for (const i of this.recipe.ingredients) {
       (<FormArray>form.get('ingredients')).controls.push(
         this.createIngredientGroup(i)
       )
@@ -42,7 +56,7 @@ export class RecipeUpsertComponent {
   }
 
   resetForm() {
-    this.form = this.initForm(this.recipe);
+    this.form = this.initForm();
   }
 
   get ingredients() {
