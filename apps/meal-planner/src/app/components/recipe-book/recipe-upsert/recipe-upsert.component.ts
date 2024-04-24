@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterModule, Params } from '@angular/router';
@@ -39,7 +39,6 @@ export class RecipeUpsertComponent {
     }));
     ;
     
-    console.log(this.recipe)
     const form = new FormGroup({
       name: new FormControl(this.recipe.name, [Validators.required]),
       description: new FormControl(this.recipe.description),
