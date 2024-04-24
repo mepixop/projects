@@ -17,6 +17,7 @@ export const appRoutes: Route[] = [
       { path: 'add', component: RecipeUpsertComponent },
       { path: ':id', component: RecipeDetailComponent },
       { path: ':id/edit', component: RecipeUpsertComponent },
+   
     ],
     resolve: { r: resolveRecipes },
   },

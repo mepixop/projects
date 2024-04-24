@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Recipe } from '../../../libs/models';
 import { RecipeService } from '../../../libs/services/recipe.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'projects-recipe-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './recipe-detail.component.html',
   styleUrl: './recipe-detail.component.css',
 })
@@ -36,6 +36,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+
 
   ngOnDestroy(): void {
     this.destroy.forEach((s) => s.unsubscribe());
