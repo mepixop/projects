@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterModule, Params } from '@angular/router';
+import { ActivatedRoute, RouterModule, Params, Router } from '@angular/router';
 import { Recipe } from '../../../libs/models/recipe.model';
 import { Ingredient, UNITS, Unit } from '../../../libs/models/ingredient.model';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -23,7 +23,7 @@ export class RecipeUpsertComponent {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private domSanitizer: DomSanitizer, private recipeService: RecipeService, private route: ActivatedRoute,) {
+  constructor(private domSanitizer: DomSanitizer, private recipeService: RecipeService, private route: ActivatedRoute, private router:Router) {
     this.recipe = new Recipe('', '', '', '', [{ name: '', amount: 0, unit: 'g' }]);
     this.form = this.initForm();
   }
@@ -52,6 +52,10 @@ export class RecipeUpsertComponent {
       )
     }
     return form;
+  }
+
+  routingBack(){
+      this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   resetForm() {
