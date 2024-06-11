@@ -67,9 +67,9 @@ export class RecipeUpsertComponent {
   }
 
   routingBack() {
-    alert('Changes where not saved');
-
-    this.router.navigate(['../'], { relativeTo: this.route });
+    if (confirm('Changes will not be saved, are you sure to continue back?')) {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    }
   }
 
   resetForm() {
