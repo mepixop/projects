@@ -15,19 +15,15 @@ export class RecipeService {
     this.recipeList.push(finalRecipe);
   }
 
-  updateRecipe(id: string, newRecipe: Recipe) : void {
+  updateRecipe(id: string, newRecipe: Recipe): void {
+    newRecipe.id = id!;
+    const index = this.recipeList.findIndex((recipe) => {
+      return recipe.id == id;
+    });
 
-      const index = this.recipeList.findIndex(
-        (recipe) => {
-          return recipe.id === id;
-        }
-      );
-  
-      this.recipeList[index] = newRecipe;
-      this.recipesChanged.next(this.recipeList.slice());
-    
-    }
-  
+    this.recipeList[index] = newRecipe;
+    this.recipesChanged.next(this.recipeList);
+  }
 
   getRecipelist() {
     return this.recipeList;

@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, RouterModule, Params, Router } from '@angular/router';
 import { Recipe } from '../../../libs/models/recipe.model';
 import { Ingredient, UNITS, Unit } from '../../../libs/models/ingredient.model';
@@ -17,46 +23,53 @@ import { Subscription } from 'rxjs';
 export class RecipeUpsertComponent {
   form: FormGroup;
   recipe: Recipe;
-  id: string |undefined;
-  ingredientUnits: Unit[] = UNITS.map(e => e);
-  editMode = false
+  id: string | undefined;
+  ingredientUnits: Unit[] = UNITS.map((e) => e);
+  editMode = false;
 
   subscriptions: Subscription[] = [];
 
-  constructor(private domSanitizer: DomSanitizer, private recipeService: RecipeService, private route: ActivatedRoute, private router:Router) {
-    this.recipe = new Recipe('', '', '', '', [{ name: '', amount: 0, unit: 'g' }]);
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private recipeService: RecipeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.recipe = new Recipe('', '', '', '', [
+      { name: '', amount: 0, unit: 'g' },
+    ]);
     this.form = this.initForm();
   }
 
-  initForm(): FormGroup { 
-    this.subscriptions.push(this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];
-      this.editMode = (params['id'] != null);
-      if (this.editMode){
-        this.recipe = this.recipeService.getRecipeById(this.id!)!;
-      }
-     
-    }));
-    ;
-    
+  initForm(): FormGroup {
+    this.subscriptions.push(
+      this.route.params.subscribe((params: Params) => {
+        this.id = params['id'];
+        this.editMode = params['id'] != null;
+        if (this.editMode) {
+          this.recipe = this.recipeService.getRecipeById(this.id!)!;
+        }
+      })
+    );
     const form = new FormGroup({
       name: new FormControl(this.recipe.name, [Validators.required]),
       description: new FormControl(this.recipe.description),
       mediaUrl: new FormControl(this.recipe.mediaUrl),
       mediaType: new FormControl(this.recipe.mediaType),
-      ingredients: new FormArray([])
+      ingredients: new FormArray([]),
     });
     for (const i of this.recipe.ingredients) {
       (<FormArray>form.get('ingredients')).controls.push(
         this.createIngredientGroup(i)
-      )
+      );
     }
     return form;
   }
 
-  routingBack(){
-    alert("Changes where not saved")
-      this.router.navigate(['../'], { relativeTo: this.route });
+  routingBack() {
+    alert('Changes where not saved');
+
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   resetForm() {
@@ -69,12 +82,15 @@ export class RecipeUpsertComponent {
 
   get safeYoutubeUrl() {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(
-      (this.form.get('mediaUrl')!.value as string).replace('/watch?v=', '/embed/')
+      (this.form.get('mediaUrl')!.value as string).replace(
+        '/watch?v=',
+        '/embed/'
+      )
     );
   }
 
   getImageUrl() {
-    return this.form.get('mediaUrl')!.value
+    return this.form.get('mediaUrl')!.value;
   }
 
   deleteIngredient(index: number) {
@@ -84,23 +100,25 @@ export class RecipeUpsertComponent {
   addNewIngredient() {
     (<FormArray>this.form.get('ingredients')).push(
       this.createIngredientGroup({ name: '', amount: 0, unit: 'g' })
-    )
+    );
   }
 
   createIngredientGroup(ingredient: Ingredient) {
     return new FormGroup({
       name: new FormControl(ingredient.name, [Validators.required]),
       amount: new FormControl(ingredient.amount, [Validators.required]),
-      unit: new FormControl(ingredient.unit)
+      unit: new FormControl(ingredient.unit),
     });
   }
 
   saveRecipe() {
-    
     const newRecipe = new Recipe(
       this.form.get('name')!.value,
       this.form.get('description')!.value,
-      (this.form.get('mediaUrl')!.value as string).replace('/watch?v=', '/embed/'),
+      (this.form.get('mediaUrl')!.value as string).replace(
+        '/watch?v=',
+        '/embed/'
+      ),
       this.form.get('mediaType')!.value,
       []
     );
@@ -110,13 +128,10 @@ export class RecipeUpsertComponent {
       );
     }
 
-    if(!this.editMode)
-    {
-      this.recipeService.addRecipe(newRecipe)
-    } 
-    else
-    {
-      this.recipeService.updateRecipe(this.id!,newRecipe)
+    if (!this.editMode) {
+      this.recipeService.addRecipe(newRecipe);
+    } else {
+      this.recipeService.updateRecipe(this.id!, newRecipe);
     }
   }
 }
