@@ -25,6 +25,15 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.params['id'];
   }
 
+  async delete() {
+    if (!this.recipe) {
+      alert('No valid recipe to delete');
+    } else {
+      await this.recipeService.deleteRecipe(this.recipe);
+      this.router.navigate(['/recipe-book']);
+    }
+  }
+
   ngOnInit(): void {
     this.destroy.push(
       this.route.params.subscribe((params: Params) => {
@@ -36,8 +45,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       })
     );
   }
-
-
 
   ngOnDestroy(): void {
     this.destroy.forEach((s) => s.unsubscribe());

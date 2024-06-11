@@ -13,16 +13,24 @@ export class RecipeService {
   addRecipe(recipe: Recipe) {
     const finalRecipe = this.recipeFirebaseService.addNewRecipe(recipe);
     this.recipeList.push(finalRecipe);
+    return finalRecipe;
   }
 
   updateRecipe(id: string, newRecipe: Recipe): void {
-    newRecipe.id = id!;
+    newRecipe.id = id;
     const index = this.recipeList.findIndex((recipe) => {
       return recipe.id == id;
     });
 
     this.recipeList[index] = newRecipe;
     this.recipesChanged.next(this.recipeList);
+    this.recipeFirebaseService.updateRecipe(newRecipe);
+  }
+
+  async deleteRecipe(recipe: Recipe) {
+    this.recipeList = this.recipeList.filter((item) => item.id != recipe.id);
+    this.recipesChanged.next(this.recipeList);
+    this.recipeFirebaseService.deleteRecipe(recipe);
   }
 
   getRecipelist() {

@@ -13,7 +13,10 @@ export class RecipeFirebaseService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getTableUrl(tableName?: string) {
+  getTableUrl(tableName?: string, path?: string) {
+    if (tableName && path) {
+      return this.firebaseUrl + tableName + '/' + path + this.ending;
+    }
     if (tableName) {
       return this.firebaseUrl + tableName + this.ending;
     }
@@ -25,6 +28,18 @@ export class RecipeFirebaseService {
       .post<{ name: string }>(this.getTableUrl(), recipe)
       .subscribe((data) => (recipe.id = data.name));
     return recipe;
+  }
+
+  updateRecipe(recipe: Recipe): void {
+    this.httpClient
+      .put(this.getTableUrl('recipe-list', recipe.id), recipe)
+      .subscribe();
+  }
+
+  deleteRecipe(recipe: Recipe): void {
+    this.httpClient
+      .delete(this.getTableUrl('recipe-list', recipe.id))
+      .subscribe();
   }
 
   getRecipes() {

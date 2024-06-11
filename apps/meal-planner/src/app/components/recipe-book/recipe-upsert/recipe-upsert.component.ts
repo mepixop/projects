@@ -112,7 +112,7 @@ export class RecipeUpsertComponent {
   }
 
   saveRecipe() {
-    const newRecipe = new Recipe(
+    let newRecipe = new Recipe(
       this.form.get('name')!.value,
       this.form.get('description')!.value,
       (this.form.get('mediaUrl')!.value as string).replace(
@@ -129,9 +129,12 @@ export class RecipeUpsertComponent {
     }
 
     if (!this.editMode) {
-      this.recipeService.addRecipe(newRecipe);
+      newRecipe = this.recipeService.addRecipe(newRecipe);
+      this.id = newRecipe.id;
+      this.router.navigate(['../'], { relativeTo: this.route });
     } else {
       this.recipeService.updateRecipe(this.id!, newRecipe);
+      this.router.navigate(['../'], { relativeTo: this.route });
     }
   }
 }
