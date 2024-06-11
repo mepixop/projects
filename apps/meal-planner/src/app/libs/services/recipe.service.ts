@@ -15,6 +15,20 @@ export class RecipeService {
     this.recipeList.push(finalRecipe);
   }
 
+  updateRecipe(id: string, newRecipe: Recipe) : void {
+
+      const index = this.recipeList.findIndex(
+        (recipe) => {
+          return recipe.id === id;
+        }
+      );
+  
+      this.recipeList[index] = newRecipe;
+      this.recipesChanged.next(this.recipeList.slice());
+    
+    }
+  
+
   getRecipelist() {
     return this.recipeList;
   }

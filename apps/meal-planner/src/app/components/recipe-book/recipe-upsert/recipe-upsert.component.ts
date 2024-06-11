@@ -55,6 +55,7 @@ export class RecipeUpsertComponent {
   }
 
   routingBack(){
+    alert("Changes where not saved")
       this.router.navigate(['../'], { relativeTo: this.route });
   }
 
@@ -95,6 +96,7 @@ export class RecipeUpsertComponent {
   }
 
   saveRecipe() {
+    
     const newRecipe = new Recipe(
       this.form.get('name')!.value,
       this.form.get('description')!.value,
@@ -107,6 +109,14 @@ export class RecipeUpsertComponent {
         new Ingredient(i.value.name, i.value.amount, i.value.unit)
       );
     }
-    this.recipeService.addRecipe(newRecipe)
+
+    if(!this.editMode)
+    {
+      this.recipeService.addRecipe(newRecipe)
+    } 
+    else
+    {
+      this.recipeService.updateRecipe(this.id!,newRecipe)
+    }
   }
 }
