@@ -7,8 +7,13 @@ import { RecipeHeaderComponent } from './recipe-header/recipe-header.component';
 @Component({
   selector: 'projects-recipe-book',
   standalone: true,
-  imports: [CommonModule, RouterModule, RecipeListComponent, RecipeHeaderComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    RecipeListComponent,
+    RecipeHeaderComponent,
+  ],
   templateUrl: './recipe-book.component.html',
   styleUrl: './recipe-book.component.css',
 })
-export class RecipeBookComponent { }
+export class RecipeBookComponent {}
