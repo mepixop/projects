@@ -6,17 +6,11 @@
         <div class="col">
           <projects-shopping-list-header></projects-shopping-list-header>
         </div>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-8">
-              <ul>
-                <li *ngFor="let ingredient of ingredients$ | async">
-                  {{ ingredient.amount }} {{ ingredient.unit }} of
-                  {{ ingredient.name }}
-                </li>
-              </ul>
-            </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <projects-shopping-list-list></projects-shopping-list-list>
           </div>
         </div>
       </div>

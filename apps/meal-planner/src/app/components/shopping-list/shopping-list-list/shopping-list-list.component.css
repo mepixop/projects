@@ -1,0 +1,9 @@
+.list-size {
+  height: 80vh;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.spacing-top {
+  padding-top: 2vh;
+}
